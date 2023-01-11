@@ -2,9 +2,9 @@ import React from 'react'
 
 const SignUp = () => {
   return (
-    <div>
-        SignUp Pa
-    </div>
+    <form method='post'>
+        SignUp Page
+    </form>
   )
 }
 

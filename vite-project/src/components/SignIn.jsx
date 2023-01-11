@@ -2,9 +2,9 @@ import React from 'react'
 
 const SignIn = () => {
   return (
-    <div>
-        SignIn
-    </div>
+    <form method='post'>
+        
+    </form>
   )
 }
 
