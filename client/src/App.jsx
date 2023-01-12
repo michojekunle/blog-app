@@ -1,31 +1,17 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className="App bg-[#eee]">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" className='text-3xl text-[#800]'>
-          Hello World
-        </a>
+    <BrowserRouter>
+      <div className="bg-[#eee] flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        
+        <Routes>
+
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    </BrowserRouter>
   )
 }
 
