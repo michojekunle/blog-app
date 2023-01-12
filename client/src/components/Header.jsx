@@ -3,10 +3,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  { name: 'Dashboard', href: '/', current: true }
 ]
 
 function classNames(...classes) {
@@ -15,7 +12,7 @@ function classNames(...classes) {
 
 export default function Example() {
   return (
-    <Disclosure as="nav" className="bg-yellow-900 w-full relative top-0 backdrop-blur-3xl">
+    <Disclosure as="nav" className="bg-yellow-700 w-full relative top-0 backdrop-blur-3xl">
       {({ open }) => (
         <>
           <div className="w-full px-2 sm:px-6 lg:px-8">
