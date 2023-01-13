@@ -1,10 +1,10 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const SignUp = () => {
-  const { handleSignUp, isSignedIn } = useContext(AuthContext);
+  const { handleSignUp, isSignedIn, isLoading } = useContext(AuthContext);
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +29,7 @@ const SignUp = () => {
               </Link>
             </p>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSignUp({fullname, email, password})}>
+          <form className="mt-8 space-y-6" onSubmit={e => { e.preventDefault(); handleSignUp({fullname, email, password})}}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
@@ -90,7 +90,9 @@ const SignUp = () => {
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                   <LockClosedIcon className="h-5 w-5 text-yellow-500 group-hover:text-yellow-400" aria-hidden="true" />
                 </span>
-                Sign Up
+                {
+                  isLoading ? 'Creating Your Account ...' : 'Sign Up'
+                }
               </button>
             </div>
           </form>

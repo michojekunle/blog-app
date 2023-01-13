@@ -1,11 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const multer = require('multer');
-const upload = multer()
-const cookieParser = require('cookie-parser')
+const upload = multer();
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,13 +28,9 @@ app.listen(PORT, () => {
 
 // const express = require('express');
 // const bcrypt = require('bcrypt-nodejs');
-// const cors = require('cors');
 // const knex = require('knex');
 
-// const app = express();
 
-// app.use(express.json())
-// app.use(cors());
 
 // //database 
 // const db = knex({
@@ -39,8 +39,8 @@ app.listen(PORT, () => {
 //       host : '127.0.0.1',
 //       port : 5432,
 //       user : 'postgres',
-//       password: 'postgresql@1.0',
-//       database : 'full-stack'
+//       password: process.env.DB_PASS,
+//       database : 'blog-db'
 //     }
 //   });
 

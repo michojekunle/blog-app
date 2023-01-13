@@ -9,8 +9,8 @@ import AuthContextProvider from './context/AuthContext';
 function App() {
 
   return (
-    <AuthContextProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthContextProvider>
         <div className="flex flex-col min-h-screen w-full">
           <Header />
           <Routes>
@@ -19,8 +19,8 @@ function App() {
             <Route path='/signup' element={<SignUp/>}/>
           </Routes> 
         </div>
-      </BrowserRouter>
-    </AuthContextProvider>
+      </AuthContextProvider>
+    </BrowserRouter>
   )
 }
 
