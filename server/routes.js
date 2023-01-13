@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/blogs/all', (req, res) => {
-    res.json(blogs)
+    res.status(200).json(blogs)
 })
 
 router.all('*', (req, res) => {
@@ -24,8 +24,7 @@ router.all('*', (req, res) => {
 
 //An error handling middleware
 router.use(function(err, req, res, next) {
-    res.status(500);
-    res.send("Oops, something went wrong.")
+    res.status(500).json("Oops, something went wrong.")
  });
 
 
