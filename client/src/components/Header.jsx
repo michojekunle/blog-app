@@ -33,12 +33,12 @@ export default function Example() {
                   <img
                     className="block h-8 w-auto lg:hidden"
                     src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=400"
-                    alt="Your Company"
+                    alt="Blog P"
                   />
                   <img
                     className="hidden h-8 w-auto lg:block"
                     src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=400"
-                    alt="Your Company"
+                    alt="Blog P"
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">

@@ -11,7 +11,7 @@ const SignUp = () => {
             <img
               className="mx-auto h-12 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=400"
-              alt="Your Company"
+              alt="Blog P"
             />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Create an Account With Blog P

@@ -19,7 +19,7 @@ const Home = () => {
         </div>
         ) : (
           <div className='main-app'>
-            
+            <Blogs />
           </div>
         )
       }
