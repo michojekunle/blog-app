@@ -1,9 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const SignUp = () => {
+  const { handleSignUp, isSignedIn } = useContext(AuthContext);
+  const [fullname, setFullname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
+
     <>
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
@@ -23,7 +29,7 @@ const SignUp = () => {
               </Link>
             </p>
           </div>
-          <form className="mt-8 space-y-6" >
+          <form className="mt-8 space-y-6" onSubmit={handleSignUp({fullname, email, password})}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
@@ -31,8 +37,10 @@ const SignUp = () => {
                   Full Name
                 </label>
                 <input
-                  id="email-address"
-                  name="full name"
+                  id="full-name"
+                  value={fullname}
+                  onChange={e => setFullname(e.target.value)}
+                  name="full-name"
                   type="text"
                   autoComplete=""
                   required
@@ -46,6 +54,8 @@ const SignUp = () => {
                 </label>
                 <input
                   id="email-address"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   name="email"
                   type="email"
                   autoComplete="email"
@@ -60,6 +70,8 @@ const SignUp = () => {
                 </label>
                 <input
                   id="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                   name="password"
                   type="password"
                   autoComplete="current-password"
