@@ -11,11 +11,29 @@ const AuthContextProvider = ({children}) => {
 
     
     const handleSignIn = (userProfile) => {
-
+      const { email, password } = userProfile;
+      setIsLoading(true);
+      axios.post('http://localhost:3000/signin', {
+        email,
+        password,
+      })
+      .then(function (res) {
+        setIsLoading(false)
+        setIsSignedIn(true);
+        console.log(res);
+        alert("Successfully Logged In, Redirecting Home.")
+        navigate('/home');
+      })
+      .catch(function (err) {
+        setIsLoading(false);
+        console.log(err);
+        alert("Oops!, There was An error Logging in to your Account, Please Try Again.")
+      });
     }
 
     const handleSignOut = (userProfile) => {
-
+      setIsSignedIn(false);
+      navigate('/signin')
     }
 
     const handleSignUp = (userProfile) => {
@@ -28,10 +46,11 @@ const AuthContextProvider = ({children}) => {
             password,
           })
           .then(function (res) {
-            setIsLoading(false)
+            setIsLoading(false);
+            setIsSignedIn(true);
             console.log(res);
-            alert("Successfully Created Your Account, Redirecting to Sign In.")
-            navigate('/signin')
+            alert("Successfully Created Your Account, Redirecting Home.")
+            navigate('/home')
           })
           .catch(function (err) {
             setIsLoading(false);

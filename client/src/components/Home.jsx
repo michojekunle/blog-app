@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 
 const Home = () => {
-  const [isSignedIn, setIsSignedIn ] = useState(false);
+  const { isSignedIn } = useContext(AuthContext);
   return (
     <div className='relative h-full '>
       { !isSignedIn ? (

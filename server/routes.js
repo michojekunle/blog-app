@@ -10,9 +10,9 @@ const db = knex({
     connection: {
       host : '127.0.0.1',
       port : 5432,
-      user : 'postgres',
+      user : 'me',
       password: process.env.DB_PASS,
-      database : 'blog-db'
+      database : 'blogpdb'
     }
   });
 

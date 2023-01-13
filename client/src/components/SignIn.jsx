@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { LockClosedIcon } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const SignIn = () => {
+  const { handleSignIn, isLoading } = useContext(AuthContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <>
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -23,7 +27,7 @@ const SignIn = () => {
               </Link>
             </p>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6" onSubmit={e => { e.preventDefault(); handleSignIn({email, password})}}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
@@ -33,6 +37,8 @@ const SignIn = () => {
                 <input
                   id="email-address"
                   name="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   type="email"
                   autoComplete="email"
                   required
@@ -47,6 +53,8 @@ const SignIn = () => {
                 <input
                   id="password"
                   name="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                   type="password"
                   autoComplete="current-password"
                   required
@@ -84,7 +92,9 @@ const SignIn = () => {
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                   <LockClosedIcon className="h-5 w-5 text-yellow-500 group-hover:text-yellow-400" aria-hidden="true" />
                 </span>
-                Sign in
+                {
+                  isLoading ? 'Signing in ...' : 'Sign In'
+                }
               </button>
             </div>
           </form>
