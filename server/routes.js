@@ -48,7 +48,7 @@ const db = knex({
 //         .catch((err) => res.status(400).json("2 wrong credentials"));
 // });
 
-// //Regiter route 
+// //Sign Up route 
 // router.post('/signup', (req, res) => {
 //     const { fullname, email, password} = req.body;
 //     const hash = bcrypt.hashSync(password);
