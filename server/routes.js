@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const knex = require('knex');
+const dotenv = require('dotenv');
+require('dotenv').config()
+// console.log(process.env.SECRET_KEY);
+
+
 
 
 //Database to Connect with Knex
@@ -10,13 +15,13 @@ const db = knex({
     connection: {
       host : '127.0.0.1',
       port : 5432,
-      user : 'me',
+      user : 'postgres',
       password: process.env.DB_PASS,
-      database : 'blogpdb'
+      database : 'blog-Db'
     }
   });
 
-// db.select('*').from('users').then(users => { console.log(users) })
+db.select('*').from('users').then(users => { console.log(users) })
 // //root route
 // router.get('/', (req, res) => {
 //     db.select('*').from('users').then(users => res.json(users))
@@ -59,9 +64,8 @@ const db = knex({
 //             email: email
 //         }).into('login').returning('email').then(loginEmail => {
 //            return trx('users').returning('*').insert({
-//                     name: name,
-//                     email: loginEmail[0].email,
-//                     joined: new Date()
+//                     fullname: fullname,
+//                     email: loginEmail[0].email
 //                 })
 //                 .then(users => {
 //                         res.json(users[0])
@@ -94,8 +98,73 @@ router.get('/', (req, res) => {
 })
 
 router.post('/signup', (req, res) => {
-    res.status(200).json('Success')
+// console.log(process.env.SECRET_KEY);
+    
 })
+
+router.post('/signup', function(req, res){
+  if(!req.body.fullname || !req.body.email || !req.body.password){
+     res.status("400").json("Invalid details!");
+  } else {
+     Users.filter((user) => {
+        if(user.id === req.body.id){
+           res.status(400).json({
+              message: "User Already Exists!"});
+        }
+     });
+     var newUser = {fullname: req.body.fullname, email: req.body.id, password: req.body.password};
+     Users.push(newUser);
+     req.session.user = newUser;
+     res.status(201).json({message: "success", user: newUser });
+     //  res.redirect('/protected_page');
+  }
+});
+
+function checkSignIn(req, res){
+  if(req.session.user){
+     next();     //If session exists, proceed to page
+  } else {
+     var err = new Error("Not logged in!");
+     console.log(req.session.user);
+     next(err);  //Error, trying to access unauthorized page!
+  }
+}
+
+router.get('/protected_page', checkSignIn, function(req, res){
+  res.render('protected_page', {id: req.session.user.id})
+});
+
+
+router.post('/login', function(req, res){
+  console.log(Users);
+  if(!req.body.email || !req.body.password){
+     res.status(400).json({message: "Please enter both email and password"});
+  } else {
+     Users.filter((user) => {
+        if(user.email === req.body.email && user.password === req.body.password){
+           user.isOnline = true;
+           req.session.user = user;
+           res.status(201).json({message: "success", user });
+          //  res.redirect('/protected_page');
+        }
+     });
+     res.status(404).json({message: "Invalid credentials!"});
+  }
+});
+
+router.get('/logout', function(req, res){
+  req.session.destroy(function(){
+     console.log("user logged out.")
+  });
+  
+  res.status(200).json({message: "user logged out", user });
+});
+
+router.use('/protected_page', function(err, req, res, next){
+  console.log(err);
+  //User should be authenticated! Redirect him to log in.
+  res.redirect('/login');
+});
 
 router.all('*', (req, res) => {
     //Create an error and pass it to the next function
