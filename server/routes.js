@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const knex = require('knex');
+const dotenv = require('dotenv');
+require('dotenv').config()
+// console.log(process.env.SECRET_KEY);
+
+
 
 
 //Database to Connect with Knex
@@ -10,13 +15,26 @@ const db = knex({
     connection: {
       host : '127.0.0.1',
       port : 5432,
-      user : 'me',
+      user : 'postgres',
       password: process.env.DB_PASS,
-      database : 'blogpdb'
+      database : 'blog-Db'
     }
   });
 
-// db.select('*').from('users').then(users => { console.log(users) })
+db.select('*').from('users').then(users => { console.log(users) })
+const Users = [ 
+  {
+    fullname: "Michael O.",
+    email: "mich@gmail.com",
+    password: "sweet"
+  },
+  {
+    fullname: "Mich Amd",
+    email: "amd@gmail.com",
+    password: "sweetly"
+  },
+ ];
+ 
 // //root route
 // router.get('/', (req, res) => {
 //     db.select('*').from('users').then(users => res.json(users))
@@ -59,9 +77,8 @@ const db = knex({
 //             email: email
 //         }).into('login').returning('email').then(loginEmail => {
 //            return trx('users').returning('*').insert({
-//                     name: name,
-//                     email: loginEmail[0].email,
-//                     joined: new Date()
+//                     fullname: fullname,
+//                     email: loginEmail[0].email
 //                 })
 //                 .then(users => {
 //                         res.json(users[0])
@@ -93,9 +110,51 @@ router.get('/', (req, res) => {
     res.send("Welocome Back to Express Revision.")
 })
 
-router.post('/signup', (req, res) => {
-    res.status(200).json('Success')
-})
+
+router.post('/signup', function(req, res){
+  if(!req.body.fullname || !req.body.email || !req.body.password){
+     res.status(400).json("Invalid details!");
+  } else {
+
+     Users.filter((user) => {
+        if(user.email === req.body.email){
+           res.status(400).json({
+              message: "User Already Exists!"});
+        }
+     });
+     var newUser = {fullname: req.body.fullname, email: req.body.id, password: req.body.password};
+     Users.push(newUser);
+     req.session.user = newUser;
+     res.status(201).json({message: "success", user: req.session.user });
+     //  res.redirect('/protected_page');
+  }
+});
+
+
+router.post('/signin', function(req, res){
+  console.log(Users);
+  if(!req.body.email || !req.body.password){
+     res.status(400).json({message: "Please enter both email and password"});
+  } else {
+     Users.filter((user) => {
+        if(user.email === req.body.email && user.password === req.body.password){
+           user.isOnline = true;
+           req.session.user = user;
+           res.status(201).json({message: "success", user: req.session.user });
+          //  res.redirect('/protected_page');
+        }
+     });
+     res.status(404).json({message: "Invalid credentials!"});
+  }
+});
+
+router.get('/logout', function(req, res){
+  req.session.destroy(function(){
+     console.log("user logged out.")
+  });
+
+  res.status(200).json({message: "user logged out", user: req.session.user });
+});
 
 router.all('*', (req, res) => {
     //Create an error and pass it to the next function
@@ -107,6 +166,5 @@ router.all('*', (req, res) => {
 router.use(function(err, req, res, next) {
     res.status(500).json("Oops, something went wrong.")
  });
-
 
 module.exports = router;
