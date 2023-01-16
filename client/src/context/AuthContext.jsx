@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 
 const AuthContextProvider = ({children}) => {
     const navigate = useNavigate();
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [authProfile, setAuthProfile] = useState({});
     const [isLoading, setIsLoading ] = useState(false);
 
     
@@ -18,11 +18,12 @@ const AuthContextProvider = ({children}) => {
         password,
       })
       .then(function (res) {
-        setIsLoading(false)
-        setIsSignedIn(true);
+        setIsLoading(false);
         console.log(res);
-        alert("Successfully Logged In, Redirecting Home.")
-        navigate('/home');
+        if (res.status === 200){
+          setAuthProfile(res.data.user);
+          navigate('/');
+        }
       })
       .catch(function (err) {
         setIsLoading(false);
@@ -31,9 +32,21 @@ const AuthContextProvider = ({children}) => {
       });
     }
 
-    const handleSignOut = (userProfile) => {
-      setIsSignedIn(false);
-      navigate('/signin')
+    const handleSignOut = () => {
+      axios.post('http://localhost:3000/signout')
+      .then(function (res) {
+        console.log(res);
+        if (res.status === 200){
+          setAuthProfile(res.data.user);
+          navigate('/');
+        }
+      })
+      .catch(function (err) {
+        setIsLoading(false);
+        console.log(err);
+        alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
+      });
+      navigate('/signin');
     }
 
     const handleSignUp = (userProfile) => {
@@ -47,20 +60,29 @@ const AuthContextProvider = ({children}) => {
           })
           .then(function (res) {
             setIsLoading(false);
-            setIsSignedIn(true);
             console.log(res);
-            alert("Successfully Created Your Account, Redirecting Home.")
-            navigate('/home')
+            if (res.status === 200){
+              setAuthProfile(res.data.user);
+              navigate('/');
+            }
+            if (res.status >= 500) {
+              setIsLoading(false);
+              alert("Internal Server Error");
+            }
+            if (res.status >= 400) {
+              setIsLoading(false);
+              alert(res.data.message);
+            }
           })
           .catch(function (err) {
             setIsLoading(false);
             console.log(err);
-            alert("Oops!, There was An error creating your Account, Please Try Again.")
+            alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
           });
     }
 
     return (
-        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, isSignedIn}}>
+        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, authProfile}}>
             {children}
         </AuthContext.Provider>
     )

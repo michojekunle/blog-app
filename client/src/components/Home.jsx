@@ -1,13 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import Blogs from './Blogs';
 
 
 const Home = () => {
-  const { isSignedIn } = useContext(AuthContext);
+  const { authProfile } = useContext(AuthContext);
+  useEffect(() => {
+    console.log(authProfile);
+  }, [authProfile])
   return (
     <div className='relative h-full '>
-      { !isSignedIn ? (
+      { authProfile?.id ? (
         <div className='w-full h-full flex flex-col items-center justify-center'>
           <p className='text-3xl mt-[100px] text-center md:text-5xl' style={{fontFamily: "cursive"}}>Welcome to <span>Blog P</span></p>
           <p className='font-mono text-sm mt-3 '>Sign Up to get Started</p>
@@ -19,8 +23,9 @@ const Home = () => {
           </div>
         </div>
         ) : (
-          <div className='main-app'>
-            <Blogs />
+          <div className='relative top-[80px]'>
+            <h1 className=' text-2xl text-gray-300'>Hello {authProfile.fullname} 👋</h1>
+            <Blogs/>
           </div>
         )
       }
