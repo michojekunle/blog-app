@@ -18,69 +18,13 @@ router.use(session({
 const db = knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
-      port : 5432,
-      user : 'postgres',
+      host : process.env.DB_HOST,
+      port : process.env.DB_PORT,
+      user : process.env.DB_USER,
       password: process.env.DB_PASS,
-      database : 'blogapidb'
+      database : process.env.DB
     }
   });
-
-// db.select('*').from('users').then(users => { console.log(users) })
- 
-// //root route
-// router.get('/', (req, res) => {
-//     db.select('*').from('users').then(users => res.json(users))
-// })
-
-// //Sign-In Route
-// router.post('/signin', (req, res) => {
-//     const { password } =
-//     db.select("email", "hash")
-//         .from("login")
-//         .where("email", "=",email)
-//         .then(data => {
-//             console.log(data[0])
-//             const isValid = bcrypt.compareSyncpassword, data[0].hash);
-//             console.log(isValid);
-//             if (isValid) {
-//                 return db
-//                 .select("*")
-//                 .from("users")
-//                 .where("email", "=",email)
-//                 .then((users) => {
-//                     res.json(users[0]);
-//                 })
-//                 .catch((err) => res.status(400).json("unable to get user"));
-//             } else {
-//                 res.status(400).json("1 wrong credentials");
-//             }
-//         })
-//         .catch((err) => res.status(400).json("2 wrong credentials"));
-// });
-
-// //Sign Up route 
-// router.post('/signup', (req, res) => {
-//     const { fullname, email, password} =
-//     const hash = bcrypt.hashSync(password);
-    
-//     db.transaction((trx) => {
-//         trx.insert({
-//             hash: hash,
-//             email: email
-//         }).into('login').returning('email').then(loginEmail => {
-//            return trx('users').returning('*').insert({
-//                     fullname: fullname,
-//                     email: loginEmail[0].email
-//                 })
-//                 .then(users => {
-//                         res.json(users[0])
-//                 })
-//             })
-//                 .then(trx.commit)
-//                     .catch(trx.rollback);
-//         }).catch(err => { res.status(400).json("unable to register")})
-// });
 
 // //Profile Route
 // router.get('/profile/:id', (req, res) => {
