@@ -22,6 +22,19 @@ const db = knex({
   });
 
 db.select('*').from('users').then(users => { console.log(users) })
+const Users = [ 
+  {
+    fullname: "Michael O.",
+    email: "mich@gmail.com",
+    password: "sweet"
+  },
+  {
+    fullname: "Mich Amd",
+    email: "amd@gmail.com",
+    password: "sweetly"
+  },
+ ];
+ 
 // //root route
 // router.get('/', (req, res) => {
 //     db.select('*').from('users').then(users => res.json(users))
@@ -97,17 +110,14 @@ router.get('/', (req, res) => {
     res.send("Welocome Back to Express Revision.")
 })
 
-router.post('/signup', (req, res) => {
-// console.log(process.env.SECRET_KEY);
-    
-})
 
 router.post('/signup', function(req, res){
   if(!req.body.fullname || !req.body.email || !req.body.password){
-     res.status("400").json("Invalid details!");
+     res.status(400).json("Invalid details!");
   } else {
+
      Users.filter((user) => {
-        if(user.id === req.body.id){
+        if(user.email === req.body.email){
            res.status(400).json({
               message: "User Already Exists!"});
         }
@@ -115,27 +125,13 @@ router.post('/signup', function(req, res){
      var newUser = {fullname: req.body.fullname, email: req.body.id, password: req.body.password};
      Users.push(newUser);
      req.session.user = newUser;
-     res.status(201).json({message: "success", user: newUser });
+     res.status(201).json({message: "success", user: req.session.user });
      //  res.redirect('/protected_page');
   }
 });
 
-function checkSignIn(req, res){
-  if(req.session.user){
-     next();     //If session exists, proceed to page
-  } else {
-     var err = new Error("Not logged in!");
-     console.log(req.session.user);
-     next(err);  //Error, trying to access unauthorized page!
-  }
-}
 
-router.get('/protected_page', checkSignIn, function(req, res){
-  res.render('protected_page', {id: req.session.user.id})
-});
-
-
-router.post('/login', function(req, res){
+router.post('/signin', function(req, res){
   console.log(Users);
   if(!req.body.email || !req.body.password){
      res.status(400).json({message: "Please enter both email and password"});
@@ -144,7 +140,7 @@ router.post('/login', function(req, res){
         if(user.email === req.body.email && user.password === req.body.password){
            user.isOnline = true;
            req.session.user = user;
-           res.status(201).json({message: "success", user });
+           res.status(201).json({message: "success", user: req.session.user });
           //  res.redirect('/protected_page');
         }
      });
@@ -156,14 +152,8 @@ router.get('/logout', function(req, res){
   req.session.destroy(function(){
      console.log("user logged out.")
   });
-  
-  res.status(200).json({message: "user logged out", user });
-});
 
-router.use('/protected_page', function(err, req, res, next){
-  console.log(err);
-  //User should be authenticated! Redirect him to log in.
-  res.redirect('/login');
+  res.status(200).json({message: "user logged out", user: req.session.user });
 });
 
 router.all('*', (req, res) => {
@@ -176,6 +166,5 @@ router.all('*', (req, res) => {
 router.use(function(err, req, res, next) {
     res.status(500).json("Oops, something went wrong.")
  });
-
 
 module.exports = router;

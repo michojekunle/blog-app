@@ -1,1 +1,1 @@
-POST http://localhost:3000/signin 
+POST http://localhost:3000/ 
