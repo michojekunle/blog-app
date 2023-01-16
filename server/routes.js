@@ -1,11 +1,16 @@
 const express = require('express');
+const session = require('express-session')
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const knex = require('knex');
-const dotenv = require('dotenv');
 require('dotenv').config()
 // console.log(process.env.SECRET_KEY);
-
+router.use(session({
+   secret: process.env.SECRET,
+   resave: false,
+   saveUninitialized: true,
+   cookie: { secure: true }
+ }))
 
 
 
@@ -17,23 +22,11 @@ const db = knex({
       port : 5432,
       user : 'postgres',
       password: process.env.DB_PASS,
-      database : 'blog-Db'
+      database : 'blogapidb'
     }
   });
 
-db.select('*').from('users').then(users => { console.log(users) })
-const Users = [ 
-  {
-    fullname: "Michael O.",
-    email: "mich@gmail.com",
-    password: "sweet"
-  },
-  {
-    fullname: "Mich Amd",
-    email: "amd@gmail.com",
-    password: "sweetly"
-  },
- ];
+// db.select('*').from('users').then(users => { console.log(users) })
  
 // //root route
 // router.get('/', (req, res) => {
@@ -42,19 +35,19 @@ const Users = [
 
 // //Sign-In Route
 // router.post('/signin', (req, res) => {
-//     const { password } = req.body;
+//     const { password } =
 //     db.select("email", "hash")
 //         .from("login")
-//         .where("email", "=", req.body.email)
+//         .where("email", "=",email)
 //         .then(data => {
 //             console.log(data[0])
-//             const isValid = bcrypt.compareSync(req.body.password, data[0].hash);
+//             const isValid = bcrypt.compareSyncpassword, data[0].hash);
 //             console.log(isValid);
 //             if (isValid) {
 //                 return db
 //                 .select("*")
 //                 .from("users")
-//                 .where("email", "=", req.body.email)
+//                 .where("email", "=",email)
 //                 .then((users) => {
 //                     res.json(users[0]);
 //                 })
@@ -68,7 +61,7 @@ const Users = [
 
 // //Sign Up route 
 // router.post('/signup', (req, res) => {
-//     const { fullname, email, password} = req.body;
+//     const { fullname, email, password} =
 //     const hash = bcrypt.hashSync(password);
     
 //     db.transaction((trx) => {
@@ -110,50 +103,95 @@ router.get('/', (req, res) => {
     res.send("Welocome Back to Express Revision.")
 })
 
+const checkIfExists = function(email) {
+   let exists = false;
+  
+}
 
 router.post('/signup', function(req, res){
-  if(!req.body.fullname || !req.body.email || !req.body.password){
-     res.status(400).json("Invalid details!");
-  } else {
+   const { fullname, email, password } = req.body;
 
-     Users.filter((user) => {
-        if(user.email === req.body.email){
-           res.status(400).json({
-              message: "User Already Exists!"});
-        }
-     });
-     var newUser = {fullname: req.body.fullname, email: req.body.id, password: req.body.password};
-     Users.push(newUser);
-     req.session.user = newUser;
-     res.status(201).json({message: "success", user: req.session.user });
-     //  res.redirect('/protected_page');
-  }
+  if(!fullname || !email || !password){
+      console.log("Invalid Details!!")
+      res.status(400).json("Invalid details!");
+  } else{
+      let exists = false
+      db.select('*').from('users').then(users => {
+         users.forEach((user) => {
+            if(user.email === email){
+                 exists = true
+            }
+         });
+
+         if(exists){
+            res.status(400).json({message: "User Already Exists!"});
+            console.log("User Already Exists");  
+         } else {
+            console.log("User Details Confirmed Checking if User Exists in Database...");
+               //Create A New User 
+               const hash = bcrypt.hashSync(password);
+               console.log("Creating New User...")
+               db.transaction((trx) => {
+                  trx.insert({
+                      hash: hash,
+                      email: email
+                  }).into('login').returning('email').then(loginEmail => {
+                     return trx('users').returning('*').insert({
+                              fullname: fullname,
+                              email: loginEmail[0].email,
+                          })
+                          .then(users => {
+                                 req.session.user = users[0];
+                                  //New User Created sends response back  
+                                  console.log("New User Created...")
+                                  res.status(201).json({message: "success", user: req.session.user });
+                          })
+                      })
+                        .then(trx.commit)
+                        .catch(trx.rollback);
+                  }).catch(err => {console.log(err); res.status(400).json("Unable to register")});
+         }
+      })
+   }
 });
 
 
 router.post('/signin', function(req, res){
-  console.log(Users);
-  if(!req.body.email || !req.body.password){
+  const { email, password } = req.body;
+  if(!email || !password){
      res.status(400).json({message: "Please enter both email and password"});
   } else {
-     Users.filter((user) => {
-        if(user.email === req.body.email && user.password === req.body.password){
-           user.isOnline = true;
-           req.session.user = user;
-           res.status(201).json({message: "success", user: req.session.user });
-          //  res.redirect('/protected_page');
-        }
-     });
-     res.status(404).json({message: "Invalid credentials!"});
+      db.select("email", "hash")
+            .from("login")
+            .where("email", "=",email)
+            .then(data => {
+                  console.log(data[0])
+                  const isValid = bcrypt.compareSync(password, data[0].hash);
+                  console.log(isValid);
+                  if (isValid) {
+                     return db
+                     .select("*")
+                     .from("users")
+                     .where("email", "=",email)
+                     .then((users) => {
+                        req.session.user = users[0];
+                        res.status(200).json({ message: "success", user: req.session.user});
+                     })
+                     .catch((err) => res.status(400).json({message: "unable to get user"}));
+                  } else {
+                     res.status(400).json({ message: "Wrong credentials"});
+                  }
+            })
+            .catch((err) => res.status(400).json({message: "2 wrong credentials"}));
   }
 });
 
-router.get('/logout', function(req, res){
+router.post('/signout', function(req, res){
   req.session.destroy(function(){
      console.log("user logged out.")
   });
 
-  res.status(200).json({message: "user logged out", user: req.session.user });
+  res.status(200).json({message: "user logged out", user: [] });
 });
 
 router.all('*', (req, res) => {

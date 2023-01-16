@@ -5,7 +5,6 @@ const upload = multer();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-
 const app = express();
 
 app.use(cors());
@@ -15,6 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
 
+
 const routes = require('./routes')
 
 app.use('/', routes)
@@ -22,7 +22,7 @@ app.use('/', routes)
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(`App is running on port %s`, PORT)
+    console.log(`App is running on port %s`, PORT);
 })
 
 
