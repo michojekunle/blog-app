@@ -5,6 +5,8 @@ import Home from './components/Home';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import AuthContextProvider from './context/AuthContext';
+import CreateBlog from './components/CreateBlog';
+
 
 function App() {
 
@@ -17,6 +19,7 @@ function App() {
             <Route path='/' element={<Home/>}/>
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
+            <Route path='/create-new-blog' element={<CreateBlog />}/>
           </Routes> 
         </div>
       </AuthContextProvider>

@@ -13,7 +13,7 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const { authProfile, handleSignOut } = useContext(AuthContext);
+  const { authProfile, handleSignOut, isLoggedIn } = useContext(AuthContext);
 
   return (
     <Disclosure as="nav" className="bg-yellow-700 w-full relative top-0 backdrop-blur-3xl">
@@ -48,9 +48,9 @@ export default function Example() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white ',
                           'px-3 py-2 rounded-md text-sm font-medium'
@@ -58,15 +58,15 @@ export default function Example() {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
               </div>
-              { authProfile?.user_id ? (
+              { isLoggedIn ? (
                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                  <Link to='/create-new-blog' type='button' className='bg-gray-800 px-3 py-2 rounded-md text-sm text-white font-medium'>
-                     Create
+                     Write 
                  </Link>
                  {/* Profile dropdown */}
                  <Menu as="div" className="relative ml-3">
@@ -102,12 +102,12 @@ export default function Example() {
                        </Menu.Item>
                        <Menu.Item>
                          {({ active }) => (
-                           <Link
-                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-left text-sm text-gray-700')}
+                           <p
+                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-left text-sm text-gray-700 cursor-pointer')}
                              onClick={handleSignOut}
                            >
                              Sign out
-                           </Link>
+                           </p>
                          )}
                        </Menu.Item>
                      </Menu.Items>

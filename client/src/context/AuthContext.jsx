@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 const AuthContextProvider = ({children}) => {
     const navigate = useNavigate();
     const [authProfile, setAuthProfile] = useState({});
+    const [ isLoggedIn, setIsLoggedIn ] = useState(false);
     const [isLoading, setIsLoading ] = useState(false);
 
     
@@ -22,6 +23,7 @@ const AuthContextProvider = ({children}) => {
         console.log(res);
         if (res.status === 200){
           setAuthProfile(res.data.user);
+          localStorage.setItem('user_id', res.data.user.user_id);
           navigate('/');
         }
       })
@@ -38,6 +40,7 @@ const AuthContextProvider = ({children}) => {
         console.log(res);
         if (res.status === 200){
           setAuthProfile(res.data.user);
+          localStorage.setItem('user_id', null);
           navigate('/signin');
         }
       })
@@ -62,6 +65,7 @@ const AuthContextProvider = ({children}) => {
             console.log(res);
             if (res.status === 200){
               setAuthProfile(res.data.user);
+              localStorage.setItem('user_id', res.data.user.user_id);
               navigate('/');
             }
             if (res.status >= 500) {
@@ -80,8 +84,25 @@ const AuthContextProvider = ({children}) => {
           });
     }
 
+    useEffect(() => {
+      const user_id = localStorage.getItem("user_id");
+      console.log(user_id);
+      if (user_id !== null) {
+        setIsLoggedIn(true);
+        axios.get(`http://localhost:3000/user/${user_id}`)
+        .then((res) => {
+          console.log(res);
+          if (res.status = 200){
+            setAuthProfile(res.data.user);
+          }
+        })
+      } else {
+        setIsLoggedIn(false);
+      }
+    }, []);
+
     return (
-        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, authProfile}}>
+        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, authProfile, isLoggedIn}}>
             {children}
         </AuthContext.Provider>
     )

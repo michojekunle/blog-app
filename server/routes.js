@@ -47,6 +47,20 @@ router.get('/', (req, res) => {
     res.send("Welocome Back to Express Revision.")
 })
 
+router.get('/user/:id', (req, res) => {
+   const id = parseInt(req.params.id)
+ 
+      db.select('*')
+       .from('users')
+       .where({
+           user_id: id
+       })
+       .then(users => {
+           console.log(users[0]);
+           res.json({ message: "success", user: users[0]});
+       })
+ })
+
 router.post('/signup', function(req, res){
    const { fullname, email, password } = req.body;
 

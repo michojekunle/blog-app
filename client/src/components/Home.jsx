@@ -5,19 +5,23 @@ import Blogs from './Blogs';
 
 
 const Home = () => {
-  const { authProfile } = useContext(AuthContext);
+  const { authProfile, isLoggedIn } = useContext(AuthContext);
   
   useEffect(() => {
-    console.log(authProfile);
-  }, [authProfile]);
+    console.log(authProfile, isLoggedIn);
+  }, [authProfile, isLoggedIn]);
 
   useEffect(() => {
+    if(isLoggedIn){
 
-  }, [])
+    } else {
+      
+    }
+  }, [isLoggedIn])
 
   return (
     <div className='relative h-full '>
-      { !authProfile?.user_id ? (
+      { !isLoggedIn ? (
         <div className='w-full h-full flex flex-col items-center justify-center'>
           <p className='text-3xl mt-[100px] text-center md:text-5xl' style={{fontFamily: "cursive"}}>Welcome to <span>Blog P</span></p>
           <p className='font-mono text-sm mt-3 '>Sign Up to get Started</p>
@@ -30,7 +34,7 @@ const Home = () => {
         </div>
         ) : (
           <div className='relative top-[80px]'>
-            <h1 className=' text-2xl text-gray-400 text-center capitalize'>Hey there {authProfile.fullname.toLowerCase()} 👋</h1>
+            <h1 className=' text-2xl text-gray-400 text-center capitalize'>Hey there {authProfile?.fullname?.toLowerCase()} 👋</h1>
             <Blogs/>
           </div>
         )
