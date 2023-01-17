@@ -3,7 +3,7 @@ const session = require('express-session')
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const knex = require('knex');
-require('dotenv').config()
+require('dotenv').config();
 // console.log(process.env.SECRET_KEY);
 router.use(session({
    secret: process.env.SECRET,
@@ -46,11 +46,6 @@ const db = knex({
 router.get('/', (req, res) => {
     res.send("Welocome Back to Express Revision.")
 })
-
-const checkIfExists = function(email) {
-   let exists = false;
-  
-}
 
 router.post('/signup', function(req, res){
    const { fullname, email, password } = req.body;
