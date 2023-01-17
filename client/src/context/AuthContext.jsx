@@ -30,7 +30,7 @@ const AuthContextProvider = ({children}) => {
       .catch(function (err) {
         setIsLoading(false);
         console.log(err);
-        alert("Oops!, There was An error Logging in to your Account, Please Try Again.")
+        alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
       });
     }
 
@@ -40,7 +40,7 @@ const AuthContextProvider = ({children}) => {
         console.log(res);
         if (res.status === 200){
           setAuthProfile(res.data.user);
-          localStorage.setItem('user_id', null);
+          localStorage.setItem('user_id', 'null');
           navigate('/signin');
         }
       })
@@ -87,7 +87,7 @@ const AuthContextProvider = ({children}) => {
     useEffect(() => {
       const user_id = localStorage.getItem("user_id");
       console.log(user_id);
-      if (user_id !== null) {
+      if (user_id !== 'null') {
         setIsLoggedIn(true);
         axios.get(`http://localhost:3000/user/${user_id}`)
         .then((res) => {
@@ -99,7 +99,7 @@ const AuthContextProvider = ({children}) => {
       } else {
         setIsLoggedIn(false);
       }
-    }, []);
+    }, [localStorage.getItem("user_id")]);
 
     return (
         <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, authProfile, isLoggedIn}}>
