@@ -12,7 +12,7 @@ const Home = () => {
   }, [authProfile]);
 
   useEffect(() => {
-    
+
   }, [])
 
   return (
@@ -30,7 +30,7 @@ const Home = () => {
         </div>
         ) : (
           <div className='relative top-[80px]'>
-            <h1 className=' text-2xl text-gray-300'>Hello {authProfile.fullname} 👋</h1>
+            <h1 className=' text-2xl text-gray-400 text-center capitalize'>Hey there {authProfile.fullname.toLowerCase()} 👋</h1>
             <Blogs/>
           </div>
         )
