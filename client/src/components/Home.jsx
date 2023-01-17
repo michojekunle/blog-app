@@ -6,12 +6,18 @@ import Blogs from './Blogs';
 
 const Home = () => {
   const { authProfile } = useContext(AuthContext);
+  
   useEffect(() => {
     console.log(authProfile);
-  }, [authProfile])
+  }, [authProfile]);
+
+  useEffect(() => {
+    
+  }, [])
+
   return (
     <div className='relative h-full '>
-      { authProfile?.id ? (
+      { !authProfile?.user_id ? (
         <div className='w-full h-full flex flex-col items-center justify-center'>
           <p className='text-3xl mt-[100px] text-center md:text-5xl' style={{fontFamily: "cursive"}}>Welcome to <span>Blog P</span></p>
           <p className='font-mono text-sm mt-3 '>Sign Up to get Started</p>

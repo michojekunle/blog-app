@@ -1,7 +1,7 @@
 import { Fragment, useState, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 
 const navigation = [
@@ -63,7 +63,7 @@ export default function Example() {
                   </div>
                 </div>
               </div>
-              { !authProfile?.id ? (
+              { authProfile?.user_id ? (
                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                  <Link to='/create-new-blog' type='button' className='bg-gray-800 px-3 py-2 rounded-md text-sm text-white font-medium'>
                      Create
@@ -94,7 +94,7 @@ export default function Example() {
                          {({ active }) => (
                            <Link
                              to="/profile"
-                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 z-20')}
+                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                            >
                              Your Profile
                            </Link>
@@ -102,12 +102,12 @@ export default function Example() {
                        </Menu.Item>
                        <Menu.Item>
                          {({ active }) => (
-                           <button
-                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-left text-sm text-gray-700 w-full z-20')}
+                           <Link
+                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-left text-sm text-gray-700')}
                              onClick={handleSignOut}
                            >
                              Sign out
-                           </button>
+                           </Link>
                          )}
                        </Menu.Item>
                      </Menu.Items>

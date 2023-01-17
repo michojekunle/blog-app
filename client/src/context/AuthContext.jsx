@@ -38,7 +38,7 @@ const AuthContextProvider = ({children}) => {
         console.log(res);
         if (res.status === 200){
           setAuthProfile(res.data.user);
-          navigate('/');
+          navigate('/signin');
         }
       })
       .catch(function (err) {
@@ -46,7 +46,6 @@ const AuthContextProvider = ({children}) => {
         console.log(err);
         alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
       });
-      navigate('/signin');
     }
 
     const handleSignUp = (userProfile) => {
