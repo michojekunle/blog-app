@@ -29,11 +29,15 @@ const AuthContextProvider = ({children}) => {
       })
       .catch(function (err) {
         setIsLoading(false);
+        if (err?.code === "ERR_NETWORK") {
+          alert(err?.message)
+        }
         console.log(err);
-        alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
-      });
-    }
-
+        err?.response ? (
+          alert(err?.response?.status + ", " + err?.response?.statusText + " " + err?.response?.data?.message)
+        ) : ""
+      })
+}
     const handleSignOut = () => {
       axios.post('http://localhost:3000/signout')
       .then(function (res) {
@@ -94,7 +98,7 @@ const AuthContextProvider = ({children}) => {
           console.log(res);
           if (res.status = 200){
             setAuthProfile(res.data.user);
-          }
+          }p
         })
       } else {
         setIsLoggedIn(false);

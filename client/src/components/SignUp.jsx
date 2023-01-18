@@ -33,7 +33,7 @@ const SignUp = () => {
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
-                <label htmlFor="email-address" className="sr-only">
+                <label htmlFor="full-name" className="sr-only">
                   Full Name
                 </label>
                 <input

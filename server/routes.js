@@ -12,8 +12,6 @@ router.use(session({
    cookie: { secure: true }
  }))
 
-
-
 //Database to Connect with Knex
 const db = knex({
     client: 'pg',
@@ -68,11 +66,11 @@ router.post('/signup', function(req, res){
       console.log("Invalid Details!!")
       res.status(400).json("Invalid details!");
   } else{
-      let exists = false
+      let exists = false;
       db.select('*').from('users').then(users => {
          users.forEach((user) => {
             if(user.email === email){
-                 exists = true
+                 exists = true;
             }
          });
 
