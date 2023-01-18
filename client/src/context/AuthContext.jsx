@@ -38,7 +38,7 @@ const AuthContextProvider = ({children}) => {
         ) : ""
       })
 }
-    const handleSignOut = async () => {
+    const handleSignOut = () => {
       axios.post('http://localhost:3000/signout')
       .then(async function (res) {
         console.log(res);
@@ -53,6 +53,23 @@ const AuthContextProvider = ({children}) => {
         console.log(err);
         alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
       });
+    }
+
+    const handleCreateBlog = (det) => {
+      const { email, fullname, img, content, likes } = det;
+      
+      axios.post('http://localhost:3000/createblog', {
+        email,
+        fullname,
+        img,
+        content,
+        likes
+      })
+      .then(res => {
+
+      }).catch(err => {
+
+      })
     }
 
     const handleSignUp = (userProfile) => {
@@ -106,7 +123,7 @@ const AuthContextProvider = ({children}) => {
     }, [localStorage.getItem("user_id")]);
 
     return (
-        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, authProfile, isLoggedIn}}>
+        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, handleCreateBlog, authProfile, isLoggedIn}}>
             {children}
         </AuthContext.Provider>
     )

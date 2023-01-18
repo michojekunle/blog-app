@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const CreateBlog = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, handleCreateBlog } = useContext(AuthContext);
   const [fname,setFName] = useState("");
   const [file,setFile] = useState("");
 
@@ -56,7 +56,7 @@ const CreateBlog = () => {
         ) : (
             <div>
                 <h1 className='text-center text-3xl md:text-5xl mt-11 font-mono text-gray-600'>Create New Blog</h1> 
-                <form>
+                <form onSubmit={handleCreateBlog}>
             
                 </form>
             </div>
