@@ -9,6 +9,7 @@ const AuthContextProvider = ({children}) => {
     const [authProfile, setAuthProfile] = useState({});
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
     const [isLoading, setIsLoading ] = useState(false);
+    const [blogs, setBlogs] = useState([]);
 
     
     const handleSignIn = (userProfile) => {
@@ -49,6 +50,9 @@ const AuthContextProvider = ({children}) => {
         }
       })
       .catch(function (err) {
+        if (err?.code === "ERR_NETWORK") {
+          alert(err?.message)
+        }
         setIsLoading(false);
         console.log(err);
         alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
@@ -66,9 +70,15 @@ const AuthContextProvider = ({children}) => {
         likes
       })
       .then(res => {
-
+        if(res.status = 200){
+          navigate('/');
+        }
       }).catch(err => {
-
+        if (err?.code === "ERR_NETWORK") {
+          alert(err?.message)
+        }
+        console.log(err);
+        alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
       })
     }
 
@@ -100,9 +110,25 @@ const AuthContextProvider = ({children}) => {
           })
           .catch(function (err) {
             setIsLoading(false);
+            if (err?.code === "ERR_NETWORK") {
+              alert(err?.message)
+            }
             console.log(err);
             alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
           });
+    }
+
+    const getBlogs = () => {
+      axios.get('http://localhost:3000/getblogs')
+      .then(res => {
+        if(res.status === 200){
+          setBlogs(res.data.blogs);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
+      })
     }
 
     useEffect(() => {
@@ -123,7 +149,7 @@ const AuthContextProvider = ({children}) => {
     }, [localStorage.getItem("user_id")]);
 
     return (
-        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, handleCreateBlog, authProfile, isLoggedIn}}>
+        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, handleCreateBlog, authProfile, isLoggedIn, blogs}}>
             {children}
         </AuthContext.Provider>
     )
