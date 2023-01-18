@@ -3,6 +3,7 @@ const session = require('express-session')
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const knex = require('knex');
+const db = require('./db/conn');
 require('dotenv').config();
 // console.log(process.env.SECRET_KEY);
 router.use(session({
@@ -13,16 +14,7 @@ router.use(session({
  }))
 
 //Database to Connect with Knex
-const db = knex({
-    client: 'pg',
-    connection: {
-      host : process.env.DB_HOST,
-      port : process.env.DB_PORT,
-      user : process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database : process.env.DB
-    }
-  });
+
 
 // //Profile Route
 // router.get('/profile/:id', (req, res) => {
