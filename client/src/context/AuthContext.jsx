@@ -98,7 +98,7 @@ const AuthContextProvider = ({children}) => {
           console.log(res);
           if (res.status = 200){
             setAuthProfile(res.data.user);
-          }p
+          }
         })
       } else {
         setIsLoggedIn(false);
