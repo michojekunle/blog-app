@@ -1,13 +1,21 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const SignUp = () => {
-  const { handleSignUp, isSignedIn, isLoading } = useContext(AuthContext);
+  const { handleSignUp, isLoggedIn, isLoading } = useContext(AuthContext);
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isLoggedIn){
+      navigate('/');
+    }
+  }, [isLoggedIn]);
+
   return (
 
     <>

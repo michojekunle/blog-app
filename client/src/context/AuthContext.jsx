@@ -38,13 +38,13 @@ const AuthContextProvider = ({children}) => {
         ) : ""
       })
 }
-    const handleSignOut = () => {
+    const handleSignOut = async () => {
       axios.post('http://localhost:3000/signout')
-      .then(function (res) {
+      .then(async function (res) {
         console.log(res);
         if (res.status === 200){
+          await localStorage.setItem('user_id', 'null');
           setAuthProfile(res.data.user);
-          localStorage.setItem('user_id', 'null');
           navigate('/signin');
         }
       })
