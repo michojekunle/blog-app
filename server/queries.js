@@ -26,10 +26,9 @@ const createBlog = (req, res) => {
     db('blogs')
     .insert({email, fullname, img, content, likes})
     .then(blog => {
-      console.log(`Blog added with ID: ${results.insertId}`);
+      console.log(`Blog added with ID: ${blog.blog_id}`);
       res.status(201).json({message: "success", blog});
     })
-
 }
 
 const updateBlog = (req, res) => {

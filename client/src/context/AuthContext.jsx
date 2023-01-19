@@ -60,18 +60,19 @@ const AuthContextProvider = ({children}) => {
     }
 
     const handleCreateBlog = (det) => {
-      const { email, fullname, img, content, likes } = det;
+      const { title, img, content } = det;
       
       axios.post('http://localhost:3000/createblog', {
-        email,
-        fullname,
+        email: authProfile?.email,
+        fullname: authProfile?.fullname,
         img,
         content,
-        likes
+        likes: 0
       })
       .then(res => {
         if(res.status = 200){
           navigate('/');
+          setBlogs(res.data.blogs);
         }
       }).catch(err => {
         if (err?.code === "ERR_NETWORK") {

@@ -3,44 +3,16 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const CreateBlog = () => {
-  const { isLoggedIn, handleCreateBlog } = useContext(AuthContext);
-  const [fname,setFName] = useState("");
-  const [file,setFile] = useState("");
+  const { isLoggedIn, handleCreateBlog, isLoading } = useContext(AuthContext);
+  const [content,setContent] = useState('');
+  const [fullname,setFullname] = useState('');
+  const [title, setTitle] = useState('');
+  const [file,setFile] = useState();
 
   const navigate = useNavigate();
-
-  const setdata = (e)=>{
-      setFName(e.target.value)
-  }
-
-  const setimgfile = (e)=>{
-      setFile(e.target.files[0])
-  }
-
-  const addUserData = async(e)=>{
-      e.preventDefault();
-
-      var formData = new FormData();
-      formData.append("photo",file)
-      formData.append("fname",fname);
-
-      const config = {
-          headers:{
-              "Content-Type":"multipart/form-data"
-          }
-      }
-
-      const res = await axios.post("http://localhost:3000/createblog",formData,config);
-     
-      if(res.data.status == 201){
-          navigate("/")
-      }else{
-          console.log("error")
-      }
-  }
   
   return (
-    <div>
+    <div className='flex items-center justify-center mb-11'>
 
       { !isLoggedIn ? (
         <div className='w-full h-full flex flex-col items-center justify-center'>
@@ -54,75 +26,72 @@ const CreateBlog = () => {
           </div>
         </div>
         ) : (
-            <div>
+            <div className='w-11/12 max-w-[700px]'>
                 <h1 className='text-center text-3xl md:text-5xl mt-11 font-mono text-gray-600'>Create New Blog</h1> 
-                <form className="mt-8 space-y-6" onSubmit={e => { e.preventDefault(); handleCreateBlog({email, password})}}>
+                <form className="mt-8 space-y-6" onSubmit={e => { e.preventDefault(); handleCreateBlog({title, file})}}>
                   <input type="hidden" name="remember" defaultValue="true" />
                   <div className="-space-y-px rounded-md shadow-sm">
                     <div>
-                      <label htmlFor="email-address" className="sr-only">
-                        Email address
+                      <label htmlFor="blog-title" className="sr-only">
+                        Blog-Title
                       </label>
                       <input
-                        id="email-address"
-                        name="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        type="email"
-                        autoComplete="email"
+                        id="blog-title"
+                        name="blog-title"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        type="text"
+                        autoComplete="text"
                         required
-                        className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                        placeholder="Email address"
+                        className="relative block mb-8 w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        placeholder="Blog Title"
+                      />
+                    </div>
+                    <div className=''>
+                      <label htmlFor="blog-title" className="sr-only">
+                        Blog-Title
+                      </label>
+                      <input
+                        id="blog-image"
+                        name="blog-image"
+                        onChange={e => setFile(e.target.files[0])}
+                        type="file"
+                        required
+                        className="relative block w-full h-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     <div>
-                      <label htmlFor="password" className="sr-only">
-                        Password
+                      <label htmlFor="blog-content" className="sr-only">
+                        Blog-Content
                       </label>
-                      <input
-                        id="password"
-                        name="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        type="password"
-                        autoComplete="current-password"
+                      <textarea
+                        id="blog-content"
+                        name="blog-content"
+                        value={content}
+                        onChange={e => setContent(e.target.value)}
+                        type="text"
+                        autoComplete="text"
                         required
-                        className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                        placeholder="Password"
+                        className="relative block w-full mt-8 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 text-sm placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 md:text-md min-h-[350px]"
+                        placeholder="Blog Content"
                       />
-                    </div>
+                    </div>                    
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <input
-                        id="remember-me"
-                        name="remember-me"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                        Remember me
-                      </label>
-                    </div>
-
-                    <div className="text-sm">
-                      <a href="#" className="font-medium text-yellow-600 hover:text-yellow-500">
-                        Forgot your password?
-                      </a>
-                    </div>
-                  </div>
-
-                  <div>
+                  <div className='flex flex-row items-center justify-between'>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/')}
+                      className="group relative flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-8 text-sm font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+                    >
+                      Cancel
+                    </button>
                     <button
                       type="submit"
-                      className="group relative flex w-full justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+                      className="group relative flex  justify-center rounded-md border border-transparent bg-green-600 py-2 px-8 text-sm font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
                     >
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                        <LockClosedIcon className="h-5 w-5 text-yellow-500 group-hover:text-yellow-400" aria-hidden="true" />
-                      </span>
                       {
-                        isLoading ? 'Signing in ...' : 'Sign In'
+                        isLoading ? 'Publishing ...' : 'Publish'
                       }
                     </button>
                   </div>

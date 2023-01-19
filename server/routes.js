@@ -137,7 +137,11 @@ router.post('/signout', function(req, res){
   res.status(200).json({message: "user logged out", user: [] });
 });
 
-router.all('*', (req, res) => {
+router.post('/createblog', (req, res) => {
+   
+})
+
+router.all('*', (req, res) => { b   
     //Create an error and pass it to the next function
    var err = new Error("Something went wrong");
    next(err);
