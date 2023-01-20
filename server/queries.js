@@ -64,9 +64,9 @@ const deleteBlog = (req, res) => {
   const id = parseInt(req.params.blog_id)
 
     db('blogs')
+    .delete()
     .where('blog_id', '=', id)
-    .del()
-    
+
     res.status(200).send({ message: `Blog deleted with ID: ${id}`});
 }
 
