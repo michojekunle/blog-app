@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import Blogs from './Blogs';
+import UploadImage from'./UploadImage'
 
 
 const Home = () => {
@@ -38,8 +39,7 @@ const Home = () => {
             <Blogs/>
           </div>
         )
-      }
-        
+      }        
     </div>
   )
 }

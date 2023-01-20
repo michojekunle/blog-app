@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const knex = require('knex');
 const db = require('./db/conn');
+const { getBlogs, getBlogById, updateBlog, createBlog, deleteBlog } = require('./queries');
 require('dotenv').config();
 // console.log(process.env.SECRET_KEY);
 router.use(session({
@@ -49,7 +50,7 @@ router.get('/user/:id', (req, res) => {
            console.log(users[0]);
            res.json({ message: "success", user: users[0]});
        })
- })
+ });
 
 router.post('/signup', function(req, res){
    const { fullname, email, password } = req.body;
@@ -138,7 +139,7 @@ router.post('/signout', function(req, res){
 });
 
 router.post('/createblog', (req, res) => {
-   
+   createBlog(req, res);
 })
 
 router.all('*', (req, res) => { b   

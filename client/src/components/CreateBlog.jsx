@@ -5,12 +5,17 @@ import { AuthContext } from '../context/AuthContext';
 const CreateBlog = () => {
   const { isLoggedIn, handleCreateBlog, isLoading } = useContext(AuthContext);
   const [content,setContent] = useState('');
-  const [fullname,setFullname] = useState('');
   const [title, setTitle] = useState('');
   const [file,setFile] = useState();
 
   const navigate = useNavigate();
-  
+
+  const imgFilehandler = (e) => {
+    if (e.target.files.length !== 0) {
+      setFile(file => URL.createObjectURL(e.target.files[0]));
+    }
+  }
+ 
   return (
     <div className='flex items-center justify-center mb-11'>
 
@@ -28,7 +33,7 @@ const CreateBlog = () => {
         ) : (
             <div className='w-11/12 max-w-[700px]'>
                 <h1 className='text-center text-3xl md:text-5xl mt-11 font-mono text-gray-600'>Create New Blog</h1> 
-                <form className="mt-8 space-y-6" onSubmit={e => { e.preventDefault(); handleCreateBlog({title, file})}}>
+                <form className="mt-8 space-y-6" onSubmit={e => { e.preventDefault(); handleCreateBlog({title, file, content})}}>
                   <input type="hidden" name="remember" defaultValue="true" />
                   <div className="-space-y-px rounded-md shadow-sm">
                     <div>
@@ -47,18 +52,19 @@ const CreateBlog = () => {
                         placeholder="Blog Title"
                       />
                     </div>
-                    <div className=''>
-                      <label htmlFor="blog-title" className="sr-only">
-                        Blog-Title
+                    <div className='relative h-56 overflow-hidden'>
+                      <label htmlFor="blog-image" className="sr-only">
+                        Blog-Image
                       </label>
                       <input
                         id="blog-image"
                         name="blog-image"
-                        onChange={e => setFile(e.target.files[0])}
+                        onChange={imgFilehandler}
                         type="file"
                         required
                         className="relative block w-full h-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       />
+                      {file ? <img src={file} alt="Image Error" className='absolute bg-[#d9d9d9] top-0 h-full w-full rounded-md z-10'/>: '' }
                     </div>
                     <div>
                       <label htmlFor="blog-content" className="sr-only">
@@ -82,13 +88,13 @@ const CreateBlog = () => {
                     <button
                       type="button"
                       onClick={() => navigate('/')}
-                      className="group relative flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-8 text-sm font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+                      className="group cursor-pointer relative flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-8 text-sm font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="group relative flex  justify-center rounded-md border border-transparent bg-green-600 py-2 px-8 text-sm font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+                      className="group cursor-pointer relative flex justify-center rounded-md border border-transparent bg-green-600 py-2 px-8 text-sm font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
                     >
                       {
                         isLoading ? 'Publishing ...' : 'Publish'

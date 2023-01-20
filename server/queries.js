@@ -21,12 +21,23 @@ const getBlogById = (req, res) => {
 }
 
 const createBlog = (req, res) => {
-  const { email, fullname, img, content, likes } = req.body
+  const { email, fullname, title, img, content, likes, created_on } = req.body
 
     db('blogs')
-    .insert({email, fullname, img, content, likes})
+    .insert({
+      email,
+      fullname,
+      img, 
+      title, 
+      content, 
+      likes,
+      created_on
+    })
     .then(blog => {
+      console.log(blog);
+      db('blogs').select('*').then(res => console.log(res));
       console.log(`Blog added with ID: ${blog.blog_id}`);
+
       res.status(201).json({message: "success", blog});
     })
 }

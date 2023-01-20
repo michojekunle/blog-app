@@ -59,20 +59,22 @@ const AuthContextProvider = ({children}) => {
       });
     }
 
-    const handleCreateBlog = (det) => {
-      const { title, img, content } = det;
-      
+    const handleCreateBlog = ({ title, file, content }) => {
+      setIsLoading(true);
       axios.post('http://localhost:3000/createblog', {
         email: authProfile?.email,
         fullname: authProfile?.fullname,
-        img,
+        title,
+        img: file,
         content,
-        likes: 0
+        likes: 0,
+        created_on: new Date()
       })
       .then(res => {
         if(res.status = 200){
-          navigate('/');
           setBlogs(res.data.blogs);
+          setIsLoading(false);
+          navigate('/');
         }
       }).catch(err => {
         if (err?.code === "ERR_NETWORK") {
@@ -80,7 +82,9 @@ const AuthContextProvider = ({children}) => {
         }
         console.log(err);
         alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
+        setIsLoading(false);
       })
+      setIsLoading(false);
     }
 
     const handleSignUp = (userProfile) => {
