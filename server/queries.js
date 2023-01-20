@@ -9,13 +9,15 @@ const getBlogs = (req, res) => {
 }
 
 const getBlogById = (req, res) => {
-  const id = parseInt(req.params.id)
+  const id = parseInt(req.params.blog_id)
+  console.log(id);
   db.select('*')
    .from('blogs')
    .where({
     blog_id: id
    })
    .then(blogs => {
+    console.log(blogs)
     res.status(200).json({message: "success", blog: blogs[0]});
    })
 }
@@ -59,14 +61,13 @@ const updateBlog = (req, res) => {
 }
 
 const deleteBlog = (req, res) => {
-  const id = parseInt(req.params.id)
+  const id = parseInt(req.params.blog_id)
 
-  pool.query('DELETE FROM Blogs WHERE id = $1', [id], (err, results) => {
-    if (err) {
-      throw err
-    }
-    res.status(200).send(`Blog deleted with ID: ${id}`)
-  })
+    db('blogs')
+    .where('blog_id', '=', id)
+    .del()
+    
+    res.status(200).send({ message: `Blog deleted with ID: ${id}`});
 }
 
 module.exports = {

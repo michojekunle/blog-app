@@ -13,7 +13,7 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const { authProfile, handleSignOut, isLoggedIn } = useContext(AuthContext);
+  const { authProfile: { fullname }, handleSignOut, isLoggedIn } = useContext(AuthContext);
 
   return (
     <Disclosure as="nav" className="bg-yellow-700 w-full relative top-0 backdrop-blur-3xl">
@@ -71,13 +71,9 @@ export default function Example() {
                  {/* Profile dropdown */}
                  <Menu as="div" className="relative ml-3">
                    <div>
-                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                     <Menu.Button className="">
                        <span className="sr-only">Open user menu</span>
-                       <img
-                         className="h-8 w-8 rounded-full"
-                         src="https://media.istockphoto.com/id/1368264124/photo/extreme-close-up-of-thrashing-emerald-ocean-waves.jpg?b=1&s=170667a&w=0&k=20&c=qha_PaU54cu9QCu1UTlORP4-sW0MqLGERkdFKmC06lI="
-                         alt=""
-                       />
+                       <p className='bg-yellow-500 translate-y-[-6px] text-white rounded-full mt-3 w-11 h-11 flex items-center justify-center text-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>{fullname?.slice(0, 1)}</p>
                      </Menu.Button>
                    </div>
                    <Transition

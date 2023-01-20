@@ -128,12 +128,31 @@ const AuthContextProvider = ({children}) => {
       .then(res => {
         if(res.status === 200){
           setBlogs(res.data.blogs);
+          console.log(blogs);
         }
       })
       .catch(err => {
         console.log(err);
         alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
       })
+    }
+
+    const handleUpdateBlog = (id) => {
+
+    }
+
+    const handleDeleteBlog = (id) => {
+      if (window.confirm("Do you really want to delete this blog post!!")){
+        axios.delete(`http://localhost:3000/blog/${id}`)
+        .then(res => {
+          alert(res.data.message);
+          navigate('/');
+        })
+        .catch(err => {
+          console.log(err);
+          alert(err?.response?.status + ", " + err?.response?.statusText + " " + err?.response?.data.message);
+        })
+      }
     }
 
     useEffect(() => {
@@ -145,7 +164,7 @@ const AuthContextProvider = ({children}) => {
         .then((res) => {
           console.log(res);
           if (res.status = 200){
-            setAuthProfile(res.data.user);
+            setAuthProfile(res?.data?.user);
           }
         })
       } else {
@@ -153,8 +172,13 @@ const AuthContextProvider = ({children}) => {
       }
     }, [localStorage.getItem("user_id")]);
 
+    useEffect( () => {
+      getBlogs();
+      console.log(blogs);
+    }, []);
+
     return (
-        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, handleCreateBlog, authProfile, isLoggedIn, blogs}}>
+        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, handleCreateBlog, getBlogs, authProfile, isLoggedIn, handleUpdateBlog, handleDeleteBlog, blogs}}>
             {children}
         </AuthContext.Provider>
     )

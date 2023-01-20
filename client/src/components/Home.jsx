@@ -21,7 +21,7 @@ const Home = () => {
   }, [isLoggedIn])
 
   return (
-    <div className='relative h-full '>
+    <div className=''>
       { !isLoggedIn ? (
         <div className='w-full h-full flex flex-col items-center justify-center'>
           <p className='text-3xl mt-[100px] text-center md:text-5xl' style={{fontFamily: "cursive"}}>Welcome to <span>Blog P</span></p>
@@ -35,7 +35,7 @@ const Home = () => {
         </div>
         ) : (
           <div className='relative top-[80px]'>
-            <h1 className=' text-2xl text-gray-400 text-center capitalize'>Hey there {authProfile?.fullname?.toLowerCase()} 👋</h1>
+            <h1 className=' text-2xl text-gray-400 text-center capitalize text-right pr-11'>Hey there {authProfile?.fullname?.toLowerCase()} 👋</h1>
             <Blogs/>
           </div>
         )

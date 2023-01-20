@@ -1,19 +1,26 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { Upload } from 'upload-js';
 
 const CreateBlog = () => {
   const { isLoggedIn, handleCreateBlog, isLoading } = useContext(AuthContext);
   const [content,setContent] = useState('');
   const [title, setTitle] = useState('');
   const [file,setFile] = useState();
+  const upload = Upload({ apiKey: "public_kW15b39D4vwzxV65fgcmuk9xBArZ"});  // Your real API key.
 
   const navigate = useNavigate();
 
-  const imgFilehandler = (e) => {
-    if (e.target.files.length !== 0) {
-      setFile(file => URL.createObjectURL(e.target.files[0]));
-    }
+  const onFileSelected = async (event) => {
+    const [ file ]    = event.target.files;
+    const { fileUrl } = await upload.uploadFile(file, { onProgress });
+    setFile(fileUrl);
+    alert(`File uploaded: ${fileUrl}`);
+  }
+  
+  const onProgress = ({ progress }) => {
+    console.log(`File uploading: ${progress}% complete.`)
   }
  
   return (
@@ -59,7 +66,7 @@ const CreateBlog = () => {
                       <input
                         id="blog-image"
                         name="blog-image"
-                        onChange={imgFilehandler}
+                        onChange={onFileSelected}
                         type="file"
                         required
                         className="relative block w-full h-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
