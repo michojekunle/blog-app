@@ -44,7 +44,7 @@ const BlogDetail = () => {
             currblog?.email === authProfile?.email ? (
               <div className='flex flex-row items-center gap-8'>
                 <button onClick={handleUpdateBlog} className='group cursor-pointer relative flex justify-center rounded-md border border-transparent bg-gray-600 py-2 px-8 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2'>Update</button>
-                <button onClick={() => {alert('clicked'); handleDeleteBlog(currblog?.blog_id);} } className='group cursor-pointer relative flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-8 text-sm font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2'>Delete</button>
+                <button onClick={() => {handleDeleteBlog(currblog?.blog_id);} } className='group cursor-pointer relative flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-8 text-sm font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2'>Delete</button>
               </div>
             ) : (
               ''

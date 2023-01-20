@@ -65,9 +65,11 @@ const deleteBlog = (req, res) => {
 
     db('blogs')
     .delete()
-    .where('blog_id', '=', id)
+    .where('blog_id', id)
+    .then(result => {
+      res.status(200).send({ message: `Blog deleted with ID: ${id}`});
+    })
 
-    res.status(200).send({ message: `Blog deleted with ID: ${id}`});
 }
 
 module.exports = {
