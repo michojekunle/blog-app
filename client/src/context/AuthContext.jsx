@@ -84,7 +84,6 @@ const AuthContextProvider = ({children}) => {
         alert(err.response.status + ", " + err.response.statusText + " " + err.response.data.message);
         setIsLoading(false);
       })
-      setIsLoading(false);
     }
 
     const handleSignUp = (userProfile) => {
@@ -158,7 +157,7 @@ const AuthContextProvider = ({children}) => {
     useEffect(() => {
       const user_id = localStorage.getItem("user_id");
       console.log(user_id);
-      if (user_id !== 'null') {
+      if (user_id !== 'null' || user_id !== NaN || user_id !== 'NaN') {
         setIsLoggedIn(true);
         axios.get(`http://localhost:3000/user/${user_id}`)
         .then((res) => {
@@ -169,10 +168,12 @@ const AuthContextProvider = ({children}) => {
         })
       } else {
         setIsLoggedIn(false);
+        navigate('/signin');
       }
     }, [localStorage.getItem("user_id")]);
 
     useEffect( () => {
+
       getBlogs();
       console.log(blogs);
     }, []);

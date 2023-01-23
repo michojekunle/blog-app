@@ -8,7 +8,7 @@ const BlogCard = ({blog}) => {
   console.log(img_link)
   let summary = content.split('');
   return (
-    <Link to={`/blog/${blog_id}`} className='relative py-3 px-6 pb-11 rounded-xl bg-[#D2E7A5] min-w-[200px] max-w-[320px]'>
+    <Link to={`/blog/${blog_id}`} className='relative py-3 px-6 pb-11 rounded-xl bg-[#D2E7A5] min-w-[200px] max-w-[320px] hover:scale-105 transition-transform'>
         <div className="header flex gap-3 items-center ">
           <p className='bg-[#fff] text-[#638122] translate-y-[-6px] rounded-full mt-3 w-10 h-10 flex items-center justify-center'>{fullname?.slice(0, 1)}</p>
           <div>

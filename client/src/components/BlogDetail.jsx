@@ -29,6 +29,7 @@ const BlogDetail = () => {
   },[blog_id])
 
   return (
+    
     <div className='py-8 px-11 mb-24'>
       <div className='main-heading flex flex-row items-center justify-between mb-8'>
         <div className="flex gap-6 items-center ">

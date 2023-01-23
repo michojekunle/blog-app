@@ -8,6 +8,7 @@ const CreateBlog = () => {
   const [content,setContent] = useState('');
   const [title, setTitle] = useState('');
   const [file,setFile] = useState();
+  const [ progress, setProgress ] = useState(0);
   const upload = Upload({ apiKey: "public_kW15b39D4vwzxV65fgcmuk9xBArZ"});  // Your real API key.
 
   const navigate = useNavigate();
@@ -16,11 +17,12 @@ const CreateBlog = () => {
     const [ file ]    = event.target.files;
     const { fileUrl } = await upload.uploadFile(file, { onProgress });
     setFile(fileUrl);
-    alert(`File uploaded: ${fileUrl}`);
+    // alert(`File uploaded: ${fileUrl}`);
   }
   
   const onProgress = ({ progress }) => {
-    console.log(`File uploading: ${progress}% complete.`)
+    setProgress(progress);
+    console.log(`File uploading: ${progress}% complete.`);
   }
  
   return (
@@ -71,7 +73,8 @@ const CreateBlog = () => {
                         required
                         className="relative block w-full h-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       />
-                      {file ? <img src={file} alt="Image Error" className='absolute bg-[#d9d9d9] top-0 h-full w-full rounded-md z-10'/>: '' }
+                      {progress === 0 || progress >=100 ? <div> </div> : <div className='absolute bg-[#fff]  border border-gray-300 flex items-center justify-center text-lg font-mono top-0 h-full w-full rounded-md z-10 '>Uploading {progress}% complete</div>  }
+                      {file ? <img src={file} alt="Image Error" className='absolute bg-[#d9d9d9] top-0 h-full w-full rounded-md z-20'/>: '' }
                     </div>
                     <div>
                       <label htmlFor="blog-content" className="sr-only">
