@@ -23,6 +23,7 @@ const CreateBlog = () => {
   const onProgress = ({ progress }) => {
     setProgress(progress);
     console.log(`File uploading: ${progress}% complete.`);
+
   }
  
   return (

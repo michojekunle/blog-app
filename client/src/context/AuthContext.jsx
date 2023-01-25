@@ -157,7 +157,7 @@ const AuthContextProvider = ({children}) => {
     useEffect(() => {
       const user_id = localStorage.getItem("user_id");
       console.log(user_id);
-      if (user_id !== 'null' || user_id !== NaN || user_id !== 'NaN') {
+      if (user_id !== 'null' && user_id !== null ) {
         setIsLoggedIn(true);
         axios.get(`http://localhost:3000/user/${user_id}`)
         .then((res) => {
