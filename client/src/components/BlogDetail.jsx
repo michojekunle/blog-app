@@ -1,5 +1,5 @@
-// import { HeartIcon } from '@heroicons/react/24/outline';
-import { HeartIcon } from '@heroicons/react/20/solid';
+import { HeartIcon } from '@heroicons/react/24/outline';
+// import  { HeartIcon } from '@heroicons/react/20/solid';
 import axios from 'axios';
 import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -13,6 +13,10 @@ const BlogDetail = () => {
   const date_created = new Date(`${currblog?.created_on}`);
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const handleLike = () => {
+    
+  }
 
   useEffect(() => {
     console.log(blog_id);
@@ -67,7 +71,10 @@ const BlogDetail = () => {
       {/* Likes */}
       <div className='flex w-full items-center justify-center gap-3 mt-8'>
         {
-          
+          <HeartIcon 
+            className='w-7 h-7 text-blue-500 cursor-pointer'
+            onClick={handleLike}
+          />
         } {" "}
         <span>{currblog?.likes}</span>
       </div>
