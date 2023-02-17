@@ -9,7 +9,7 @@ const Blogs = () => {
   },[])
 
   return (
-    <div className='relative mt-8 flex flex-wrap gap-8 py-4 px-11 justify-center sm:justify-start mb-44'>
+    <div className='relative mt-8 flex flex-wrap gap-8 py-4 px-11 justify-center md:justify-start mb-44'>
         {
           blogs?.map(blog => <BlogCard blog={blog}/>)
         }

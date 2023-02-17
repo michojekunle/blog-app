@@ -75,7 +75,7 @@ const CreateBlog = () => {
                         className="relative block w-full h-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       />
                       {progress === 0 || progress >=100 ? <div> </div> : <div className='absolute bg-[#fff]  border border-gray-300 flex items-center justify-center text-lg font-mono top-0 h-full w-full rounded-md z-10 '>Uploading {progress}% complete</div>  }
-                      {file ? <img src={file} alt="Image Error" className='absolute bg-[#d9d9d9] top-0 h-full w-full rounded-md z-20'/>: '' }
+                      {file ? <img src={file} alt="Image Error" className='absolute object-cover bg-[#d9d9d9] top-0 h-full w-full rounded-md z-20'/>: '' }
                     </div>
                     <div>
                       <label htmlFor="blog-content" className="sr-only">
@@ -105,7 +105,8 @@ const CreateBlog = () => {
                     </button>
                     <button
                       type="submit"
-                      className="group cursor-pointer relative flex justify-center rounded-md border border-transparent bg-green-600 py-2 px-8 text-sm font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                      className="group cursor-pointer relative flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-8 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                      disabled = { file !== "" || content !== "" || title !== "" ? 'disabled' : ''}
                     >
                       {
                         isLoading ? 'Publishing ...' : 'Publish'

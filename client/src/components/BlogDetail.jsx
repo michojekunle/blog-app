@@ -1,7 +1,8 @@
-import { HeartIcon } from '@heroicons/react/24/outline';
+// import { HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon } from '@heroicons/react/20/solid';
 import axios from 'axios';
 import React, { useState, useContext, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 
@@ -32,7 +33,7 @@ const BlogDetail = () => {
   return (
     
     <div className='py-8 px-11 mb-24'>
-      <div className='main-heading flex flex-row items-center justify-between mb-8'>
+      <div className='main-heading flex flex-row items-center justify-between mb-8 gap-8'>
         <div className="flex gap-6 items-center ">
           <p className='bg-[#638122] text-[#fff] text-4xl translate-y-[-6px] rounded-full mt-3 w-20 h-20 flex items-center justify-center'>{currblog?.fullname?.slice(0, 1)}</p>
           <div>
@@ -59,17 +60,39 @@ const BlogDetail = () => {
       </div>
       <div>
         <h1 className='text-center text-3xl md:text-5xl font-mono underline font-bold'>{currblog.title}</h1>
-        <img src={currblog?.img} alt="No Image" className='w-full rounded-md my-16 h-[280px] bg-[#ddd]'/>
-        <p className='text-gray-700 mt-8 tracking-widest text-2xl leading-10 font-semibold '>{currblog?.content}</p>
+        <img src={currblog?.img} alt="No Image" className='w-full rounded-md my-16 h-[280px] bg-[#ddd] object-cover'/>
+        <p className='text-gray-700 mt-8 text-lg leading-8 font-semibold '>{currblog?.content}</p>
       </div>
 
       {/* Likes */}
-      <div className='flex w-full items-center justify-center'>
-          <HeartIcon className="h-5 w-5 text-blue-500"/>
+      <div className='flex w-full items-center justify-center gap-3 mt-8'>
+          
+          {
+
+            <HeartIcon className="cursor-pointer h-6 w-6 text-blue-500"/>
+          }
+          {
+            <HeartIcon className="cursor-pointer h-6 w-6 text-blue-500"/>
+
+          }
+
+          {
+            <HeartIcon className="cursor-pointer h-6 w-6 text-blue-500"/>
+
+          }
+
+          {
+            <HeartIcon className="cursor-pointer h-6 w-6 text-blue-500"/>
+
+          }
       </div>
 
       {/* Comments */}
       <div>
+        <div>
+          <h2 className='text-2xl'>Comments</h2>
+
+        </div>
         <h1>Tell us What you Think <br /> Leave A Review </h1>
       </div>
     </div>

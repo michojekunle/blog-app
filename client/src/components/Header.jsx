@@ -16,7 +16,7 @@ export default function Example() {
   const { authProfile: { fullname }, handleSignOut, isLoggedIn } = useContext(AuthContext);
 
   return (
-    <Disclosure as="nav" className="bg-blue-700 w-full relative top-0 backdrop-blur-3xl">
+    <Disclosure as="nav" className="bg-blue-700 w-full relative top-0 backdrop-blur-3xl py-2">
       {({ open }) => (
         <>
           <div className="w-full px-2 sm:px-6 lg:px-8">
