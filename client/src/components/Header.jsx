@@ -16,7 +16,7 @@ export default function Example() {
   const { authProfile: { fullname }, handleSignOut, isLoggedIn } = useContext(AuthContext);
 
   return (
-    <Disclosure as="nav" className="bg-yellow-700 w-full relative top-0 backdrop-blur-3xl">
+    <Disclosure as="nav" className="bg-blue-700 w-full relative top-0 backdrop-blur-3xl">
       {({ open }) => (
         <>
           <div className="w-full px-2 sm:px-6 lg:px-8">
@@ -36,12 +36,12 @@ export default function Example() {
                 <div className="flex flex-shrink-0 items-center"> 
                   <img
                     className="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=400"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=400"
                     alt="Blog P"
                   />
                   <img
                     className="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=400"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=400"
                     alt="Blog P"
                   />
                 </div>
@@ -73,7 +73,7 @@ export default function Example() {
                    <div>
                      <Menu.Button className="">
                        <span className="sr-only">Open user menu</span>
-                       <p className='bg-yellow-500 translate-y-[-6px] text-white rounded-full mt-3 w-11 h-11 flex items-center justify-center text-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>{fullname?.slice(0, 1)}</p>
+                       <p className='bg-blue-500 translate-y-[-6px] text-white rounded-full mt-3 w-11 h-11 flex items-center justify-center text-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>{fullname?.slice(0, 1)}</p>
                      </Menu.Button>
                    </div>
                    <Transition
@@ -113,8 +113,8 @@ export default function Example() {
            
               ) : (
                 <div className='flex'>
-                  <Link to='/signin' className="sm:block hidden rounded-full border border-transparent bg-yellow-600 py-2 px-7 text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none">Sign in</Link>
-                  <Link to='/signup' className="sm:block hidden rounded-full ml-4 border border-transparent bg-gray-100 py-2 px-7 text-sm font-medium text-yellow-600 hover:bg-gray-300 focus:outline-none">Sign up</Link>
+                  <Link to='/signin' className="sm:block hidden rounded-full border border-transparent bg-blue-600 py-2 px-7 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none">Sign in</Link>
+                  <Link to='/signup' className="sm:block hidden rounded-full ml-4 border border-transparent bg-gray-100 py-2 px-7 text-sm font-medium text-blue-600 hover:bg-gray-300 focus:outline-none">Sign up</Link>
                 </div>
               )}
             </div>

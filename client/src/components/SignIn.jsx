@@ -22,7 +22,7 @@ const SignIn = () => {
           <div>
             <img
               className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=400"
+              src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=400"
               alt="Blog P"
             />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -30,7 +30,7 @@ const SignIn = () => {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               Don't have an Account? {' '}
-              <Link to="/signup" className="font-medium text-yellow-600 hover:text-yellow-500">
+              <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500">
                 Sign Up
               </Link>
             </p>
@@ -86,7 +86,7 @@ const SignIn = () => {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-yellow-600 hover:text-yellow-500">
+                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
                   Forgot your password?
                 </a>
               </div>
@@ -95,10 +95,10 @@ const SignIn = () => {
             <div>
               <button
                 type="submit"
-                className="group relative flex w-full justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+                className="group relative flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                  <LockClosedIcon className="h-5 w-5 text-yellow-500 group-hover:text-yellow-400" aria-hidden="true" />
+                  <LockClosedIcon className="h-5 w-5 text-blue-500 group-hover:text-blue-400" aria-hidden="true" />
                 </span>
                 {
                   isLoading ? 'Signing in ...' : 'Sign In'

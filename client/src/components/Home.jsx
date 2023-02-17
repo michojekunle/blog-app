@@ -29,8 +29,8 @@ const Home = () => {
           <p className='font-serif mt-1 font-bold' style={{fontFamily: "cursive"}}>OR</p>
           <p className='font-mono text-sm mt-1 '>Sign In to get right back In.</p>
           <div className='m-11'>
-            <Link to='/signin' className="rounded-full border border-transparent bg-yellow-600 py-2 px-8 text-sm font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">Sign in</Link>
-            <Link to='/signup' className="rounded-full ml-8 border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-yellow-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2">Sign up</Link>
+            <Link to='/signin' className="rounded-full border border-transparent bg-blue-600 py-2 px-8 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Sign in</Link>
+            <Link to='/signup' className="rounded-full ml-8 border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-blue-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2">Sign up</Link>
           </div>
         </div>
         ) : (
