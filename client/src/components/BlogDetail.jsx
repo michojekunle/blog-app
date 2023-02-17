@@ -66,34 +66,15 @@ const BlogDetail = () => {
 
       {/* Likes */}
       <div className='flex w-full items-center justify-center gap-3 mt-8'>
+        {
           
-          {
-
-            <HeartIcon className="cursor-pointer h-6 w-6 text-blue-500"/>
-          }
-          {
-            <HeartIcon className="cursor-pointer h-6 w-6 text-blue-500"/>
-
-          }
-
-          {
-            <HeartIcon className="cursor-pointer h-6 w-6 text-blue-500"/>
-
-          }
-
-          {
-            <HeartIcon className="cursor-pointer h-6 w-6 text-blue-500"/>
-
-          }
+        } {" "}
+        <span>{currblog?.likes}</span>
       </div>
 
       {/* Comments */}
       <div>
-        <div>
-          <h2 className='text-2xl'>Comments</h2>
 
-        </div>
-        <h1>Tell us What you Think <br /> Leave A Review </h1>
       </div>
     </div>
   )
