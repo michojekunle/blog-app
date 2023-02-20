@@ -140,6 +140,14 @@ const AuthContextProvider = ({children}) => {
 
     }
 
+    const handleLike = () => {
+
+    }
+
+    const handleDislike = () => {
+
+    }
+
     const handleDeleteBlog = (id) => {
       if (window.confirm("Do you really want to delete this blog post!!")){
         axios.delete(`http://localhost:3000/blog/${id}`)
@@ -179,7 +187,7 @@ const AuthContextProvider = ({children}) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, handleCreateBlog, getBlogs, authProfile, isLoggedIn, handleUpdateBlog, handleDeleteBlog, blogs}}>
+        <AuthContext.Provider value={{isLoading, handleSignIn, handleSignOut, handleSignUp, handleCreateBlog, getBlogs, authProfile, isLoggedIn, handleUpdateBlog, handleDeleteBlog, blogs, handleDislike, handleLike}}>
             {children}
         </AuthContext.Provider>
     )

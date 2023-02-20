@@ -45,19 +45,19 @@ const createBlog = (req, res) => {
 }
 
 const updateBlog = (req, res) => {
-  const id = parseInt(req.params.id)
-  const { name, email } = req.body
+  // const id = parseInt(req.params.id)
+  // const { name, email } = req.body
 
-  pool.query(
-    'UPDATE Blogs SET name = $1, email = $2 WHERE id = $3',
-    [name, email, id],
-    (err, results) => {
-      if (err) {
-        throw err
-      }
-      res.status(200).send(`Blog modified with ID: ${id}`)
-    }
-  )
+  // pool.query(
+  //   'UPDATE Blogs SET name = $1, email = $2 WHERE id = $3',
+  //   [name, email, id],
+  //   (err, results) => {
+  //     if (err) {
+  //       throw err
+  //     }
+  //     res.status(200).send(`Blog modified with ID: ${id}`)
+  //   }
+  // )
 }
 
 const deleteBlog = (req, res) => {
@@ -69,6 +69,15 @@ const deleteBlog = (req, res) => {
     .then(result => {
       res.status(200).send({ message: `Blog deleted with ID: ${id}`});
     })
+}
+
+const likeBlog = (req, res) => {
+  const id = parseInt(req.params.blog_id);
+  db('blogs')
+  
+}
+
+const dislikeBlog = (req, res) => {
 
 }
 

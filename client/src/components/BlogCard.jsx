@@ -19,7 +19,7 @@ const BlogCard = ({blog}) => {
         <h3 className='text-3xl font-mono mt-4 mb-3 text-center'>{title}</h3>
         <img src={img} alt="empty" className='object-cover w-full h-32 rounded-md '/>
         <p className='mt-4 '>{summary.splice(0, 120)} . . . . .</p>
-        <Link to={`/blog/${blog_id}`} className='mb-3 mr-5 text-md text-gray-500 text-right absolute bottom-0 right-0 py-2 px-3 bg-indigo-300 rounded-md'>read more...</Link>
+        <Link to={`/blog/${blog_id}`} className='mb-3 mr-5 text-md text-blue-500 text-right absolute bottom-0 right-0 py-2 px-3 bg-indigo-100 rounded-md'>read more...</Link>
     </div>
   )
 }
