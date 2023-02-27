@@ -130,12 +130,6 @@ router.post('/signin', function(req, res){
   }
 });
 
-
-
-router.delete('/blog/:blog_id', (req, res) => {
-   deleteBlog(req, res);
-})
-
 router.post('/signout', function(req, res){
   req.session.destroy(function(){
      console.log("user logged out.")
@@ -143,6 +137,10 @@ router.post('/signout', function(req, res){
 
   res.status(200).json({message: "user logged out", user: [] });
 });
+
+router.delete('/blog/:blog_id', (req, res) => {
+   deleteBlog(req, res);
+})
 
 router.post('/createblog', (req, res) => {
    createBlog(req, res);
